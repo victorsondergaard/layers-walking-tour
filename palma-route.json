@@ -1,0 +1,273 @@
+{
+  "route": {
+    "id": "palma-portella-layers",
+    "cityId": "palma",
+    "title": "Layers of Palma: From Madina Mayurqa to the Sea Walls",
+    "description": "A slow one-hour loop behind the Cathedral through the Portella quarter and the old Call — Roman, Moorish, medieval and royal Palma stacked stone on stone.",
+    "durationMin": 60,
+    "distanceKm": 1.2,
+    "steep": false,
+    "stops": [
+      {
+        "id": "la-seu-cathedral",
+        "order": 1,
+        "title": "La Seu: A Cathedral Built on a Mosque",
+        "lat": 39.56738,
+        "lng": 2.64814,
+        "triggerRadiusM": 40,
+        "spatialCue": "Look up at the cliff of golden sandstone and flying buttresses",
+        "transcript": "Look up at that cliff of golden sandstone, ribbed with flying buttresses — La Seu, the cathedral of Mallorca. Now picture what stood here before it: the largest mosque of Madina Mayurqa, the Muslim city that became Palma. When James I of Aragon took the city in 1229, his masons began raising a cathedral directly on the mosque's site. The ground was consecrated in 1230, yet the last traces of the mosque survived inside the building works until about 1386 — and the final stone wasn't laid until 1601. Nearly four centuries of construction. Inside, under a nave forty-four metres high, glows a rose window almost fourteen metres across, the second-largest Gothic rose window in the world, and near the altar lie the tombs of Jaume II and Jaume III, kings of the short-lived island Kingdom of Mallorca. Even then the story kept going: from 1903 Antoni Gaudí reworked the interior, then walked away in 1914 with his plans unfinished. Every era of Palma left fingerprints on this building. Hold onto that idea — this whole walk is about layers.",
+        "anchorImage": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kathedrale_von_Palma_II.jpg?width=900",
+          "caption": "La Seu rising above the sea walls and the Parc de la Mar",
+          "type": "photo"
+        },
+        "learnMore": {
+          "text": "The cathedral is a textbook of Catalan Gothic pushed to its limits. Its three parallel naves have no transept and no ambulatory; the central vault rises about 44 metres — the eighth-highest church nave in the world — carried on pillars that are astonishingly slender, roughly one-twelfth the width of the vault they support (Reims manages one-sixth). The stone came largely from quarries at Santanyí in the island's southeast. The earliest completed part, the Chapel of the Holy Trinity (finished 1327), was conceived as the burial place of Mallorca's own royal dynasty, and the marble tombs of Jaume II and Jaume III rest there today. Gaudí's controversial restoration (1903–1914) moved the Gothic choir stalls out of the nave, opened bricked-up windows to flood the space with light, and hung a great canopy over the altar before disputes ended the project. The most recent layer came in 2001–2006, when Mallorcan artist Miquel Barceló wrapped an entire side chapel in ceramic depicting the Miracle of the Loaves and Fishes — proof that this building has never stopped being rebuilt.",
+          "images": [
+            {
+              "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kathedrale_La_Seu_Inside%2C_Palma_4.JPG?width=900",
+              "caption": "The 44-metre nave — eighth highest in the world — lit by its rose windows",
+              "type": "photo"
+            },
+            {
+              "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Cathedral_de_Mallorca_(35210686464).jpg?width=900",
+              "caption": "The cathedral seen from the water, as arriving sailors saw it for centuries",
+              "type": "photo"
+            }
+          ]
+        },
+        "sources": [
+          { "label": "Wikipedia — Palma Cathedral", "url": "https://en.wikipedia.org/wiki/Palma_Cathedral" },
+          { "label": "Wikipédia (fr) — Cathédrale de Palma de Majorque", "url": "https://fr.wikipedia.org/wiki/Cath%C3%A9drale_de_Palma_de_Majorque" },
+          { "label": "Cathedral of Mallorca — official history page", "url": "https://catedraldemallorca.org/en/cathedral/history/" }
+        ]
+      },
+      {
+        "id": "palau-almudaina",
+        "order": 2,
+        "title": "The Almudaina: A Palace with Two Faces",
+        "lat": 39.56750,
+        "lng": 2.64722,
+        "triggerRadiusM": 35,
+        "spatialCue": "On your right, across from the cathedral steps, the battlemented palace",
+        "transcript": "On your right, facing the cathedral across the square, stands a fortress wearing a crown of battlements — the Palau de l'Almudaina. Its bones are far older than its Gothic windows. This was the alcázar of the Muslim rulers of Madina Mayurqa, the fortified heart of their city, and when the conquerors arrived in 1229 they didn't tear it down — they moved in. The great transformation came under the new Kingdom of Mallorca: from 1305, King Jaume II had the Arab fortress remade as a Gothic royal palace, with a Great Hall for court ceremony, the little chapel of Saint Anne, and a sculpted figure of the archangel Gabriel set above it all. The independent kingdom lasted barely a lifetime — in 1349 it passed for good to the Crown of Aragon under Peter IV. Yet the palace never lost its rank. Seven centuries later it is still an official residence of the Spanish royal family, used for official acts each summer. Dynasties come and go; the house on the hill remains.",
+        "anchorImage": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Almudaina_catedral.jpg?width=900",
+          "caption": "The Almudaina palace standing beside the cathedral",
+          "type": "photo"
+        },
+        "learnMore": {
+          "text": "Almudaina comes from the Arabic for 'the citadel', and at the time of the 1229 conquest the fortress was known as the Zuda. Account books from the royal works survive, showing that the major rebuilding was carried out between roughly 1309 and 1314, though the idea was conceived before 1300 as part of Jaume II's programme to remake his capital. Inside, the palace still follows its fourteenth-century plan: the King's and Queen's palaces, the chapel of Saint Anne, and the baths. Successive courts held power here — the kings of Mallorca, then the Aragonese monarchs, and later the Spanish crown; Philip II turned the great Tinell hall over to the Real Audiencia (royal court of justice) and installed the islands' military captaincy in the rest. The upper floor was added in the first half of the sixteenth century under Emperor Charles V. Today the building is managed by Patrimonio Nacional and doubles as a museum: medieval-style rooms below, and state rooms above where King Felipe VI holds audiences during the royal family's summer stays in Mallorca.",
+          "images": [
+            {
+              "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Exterior_of_the_Royal_Palace_of_La_Almudaina_02.jpg?width=900",
+              "caption": "The palace's western walls seen from the gardens below",
+              "type": "photo"
+            }
+          ]
+        },
+        "sources": [
+          { "label": "Wikipedia — Royal Palace of La Almudaina", "url": "https://en.wikipedia.org/wiki/Royal_Palace_of_La_Almudaina" },
+          { "label": "Patrimonio Nacional — Royal Palace of La Almudaina", "url": "https://www.patrimonionacional.es/en/visita/royal-palace-la-almudaina" }
+        ]
+      },
+      {
+        "id": "hort-del-rei",
+        "order": 3,
+        "title": "S'Hort del Rei: The King's Garden and the Arch",
+        "lat": 39.56794,
+        "lng": 2.64641,
+        "triggerRadiusM": 30,
+        "spatialCue": "Below you on the left, fountains and orange trees at the foot of the palace wall",
+        "transcript": "Pause here and look down to your left: fountains, orange trees and a long pool lying at the foot of the palace's western wall. This is s'Hort del Rei — the King's Garden. In the early 1300s, under Jaume II, this was the palace's working garden, planted with fruit trees, vegetables, medicinal herbs and flowers for the royal household. Then the garden died a very modern death: by the early twentieth century it had vanished under a lyric theatre, built in 1902, the Alhambra building of 1918, and a row of everyday shops. What you see today is an act of resurrection — from 1966, architect Gabriel Alomar had the buildings demolished and the garden conjured back in Moorish style. Walk down among the pergolas and find the Arc de la Drassana, the old stone arch spanning the swan pond. It is believed to be of Arab origin, and may once have been a watergate — a passage where boats could slip between the fortress and the sea. Kitchen garden, cinema block, garden again: even the green spaces here come in layers.",
+        "anchorImage": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/14-01-22-palma-de-mallorca-156.jpg?width=900",
+          "caption": "S'Hort del Rei, the recreated King's Garden below the Almudaina",
+          "type": "photo"
+        },
+        "learnMore": {
+          "text": "The medieval Hort del Rei was walled and jealously kept: a productive orchard-garden serving the Almudaina, in a tradition of palace gardens that Mallorca inherited from its Islamic centuries — water channels, shade, and fruit close to the kitchens. An anonymous seventeenth-century painting records the garden divided into neat parterres. After the nineteenth century the wall came down, the plots were sold, and entertainment palaces took over — the Lyric Theatre of 1902 stood roughly where the pool now stretches. The 1960s restoration by Gabriel Alomar deliberately mixed traditional Mallorcan and Andalusian garden language: Moorish-style fountains and pergolas beneath the palace wall. Among the sculptures placed here are Es Foner, a bronze Balearic slinger by Llorenç Rosselló that won a silver medal at Barcelona's fine-arts exhibition of 1898, a marble 'Jònica' by Josep Maria Subirachs, and 'Nancy', a moving stabile-mobile by the American artist Alexander Calder. The Arc de la Drassana, the horseshoe-profiled arch over the pond, takes its name from the drassana — the shipyard — that once lay between the palace and the water.",
+          "images": [
+            {
+              "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Palma_de_Mallorca_-_Antiguo_arco_de_entrada_de_las_murallas_-_panoramio.jpg?width=900",
+              "caption": "The Arc de la Drassana spanning the pond in s'Hort del Rei",
+              "type": "photo"
+            },
+            {
+              "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jardines_S'Hort_del_Rei_-_panoramio.jpg?width=900",
+              "caption": "Fountains and clipped greenery of the restored royal garden",
+              "type": "photo"
+            }
+          ]
+        },
+        "sources": [
+          { "label": "Ara Balears — The King's Garden: the hidden history of Palma's gardens", "url": "https://en.arabalears.cat/society/the-king-s-garden-the-hidden-history-behind-palma-s-most-emblematic-gardens_130_5718827.html" },
+          { "label": "Life-Globe — Hort del Rei Park, Palma", "url": "https://life-globe.com/en/hort-del-rei-park-palma/" },
+          { "label": "Mapcarta — Hort del Rei (OpenStreetMap/Wikidata)", "url": "https://mapcarta.com/35837434" }
+        ]
+      },
+      {
+        "id": "dalt-murada-ses-voltes",
+        "order": 4,
+        "title": "Dalt Murada: Walking the Sea Walls",
+        "lat": 39.56655,
+        "lng": 2.64837,
+        "triggerRadiusM": 35,
+        "spatialCue": "On your right, over the parapet, the lake of Parc de la Mar",
+        "transcript": "You're on top of the city wall now. On your right, beyond the parapet, spreads the lake of the Parc de la Mar; on your left, old palaces peer over the walkway. Before the 1970s there was no park down there — the Mediterranean washed almost to the foot of these stones. This stretch is the Dalt Murada, the walk 'atop the wall', running from the arch near Carrer de l'Almudaina to Carrer de la Portella. The line of defences here is ancient, but what you're standing on is the Renaissance refit: begun in 1562, and incredibly, only finished in 1801. Right beneath the cathedral sits Ses Voltes, the vaulted bastion built between 1771 and 1801 under the engineer Manuel Santander — the very last piece that closed Palma's fifth and final ring of walls. Soldiers were barracked in its vaults for generations; since 1985 it has belonged to the city, and the old gun platform hosts open-air concerts and exhibitions. A few easy steps connect the levels here — take them slowly and enjoy the view.",
+        "anchorImage": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Majorque_Palma_Passeig_Dalt_Murada_Catedrale_-_panoramio.jpg?width=900",
+          "caption": "The Dalt Murada walkway with the cathedral rising behind",
+          "type": "photo"
+        },
+        "learnMore": {
+          "text": "Palma has been ringed by successive walled enclosures since Roman times — the tourist board counts five, from the Roman circuit of ancient Palmaria through the Arab walls of Madina Mayurqa to the vast Renaissance system designed to resist artillery. The seafront section survived the fate of the rest: when the landward walls were demolished from 1902 to let the city breathe, the Dalt Murada was spared, which is why you can still walk it today. Ses Voltes, the sandstone bastion tucked directly beneath the cathedral's south front, was the final act of that centuries-long fortification project — built 1771–1801, used as a military barracks, and handed to Palma's city council in 1985. In the late 1980s the architect Elies Torres converted its central courtyard and long barrel-vaulted halls into an open-air theatre and exhibition space of over 1,000 square metres. The 1644 map by Antoni Garau, reproduced here, shows the city as these walls once framed it: a dense knot of parishes, convents and the Call, sealed between bastions and the sea.",
+          "images": [
+            {
+              "url": "https://commons.wikimedia.org/wiki/Special:FilePath/050_Parc_de_la_Mar_(Palma)%2C_estany%2C_des_de_Dalt_Murada%2C_cara_oest_del_baluard_de_ses_Voltes.jpg?width=900",
+              "caption": "The Ses Voltes bastion and Parc de la Mar seen from the Dalt Murada",
+              "type": "photo"
+            },
+            {
+              "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Maiorica_civitas_olim_Palma_(Garau).jpg?width=900",
+              "caption": "Period art: Antoni Garau's engraved map of walled Palma, 1644",
+              "type": "period-art"
+            }
+          ]
+        },
+        "sources": [
+          { "label": "Visit Palma — Dalt Murada", "url": "https://visitpalma.com/en/dir/dalt-murada/" },
+          { "label": "Visit Palma — Muralla Ses Voltes", "url": "https://visitpalma.com/en/dir/muralla-ses-voltes/" },
+          { "label": "Lonely Planet — Dalt Murada", "url": "https://www.lonelyplanet.com/points-of-interest/dalt-murada/1048573" }
+        ]
+      },
+      {
+        "id": "sa-portella",
+        "order": 5,
+        "title": "Sa Portella: The Little Gate to the Sea",
+        "lat": 39.56652,
+        "lng": 2.65054,
+        "triggerRadiusM": 25,
+        "spatialCue": "On your left, a modest arch opens through the sea wall",
+        "transcript": "On your left, a modest arch pierces the sea wall — sa Portella, 'the little gate'. It's easy to walk straight past, but this is an original seaward gate of the medieval walls, one of the humble doorways through which the Mediterranean entered the daily life of the city. Think of what passed through openings like this one: baskets of fish, sacks of salt, sailors heading for a tavern, washerwomen heading for the shore. The little gate gave its name to the street running inland from it, Carrer de la Portella, and that street tells you what happened next: as the harbour trade made fortunes, this became one of the most aristocratic corners of Palma. Behind these austere sandstone façades hide the courtyards of great houses — Can Pasqual, Can Fontirroig, Can Espanya-Serra — and Ca la Gran Cristiana, the mansion that now holds the Museum of Mallorca. It's a very Palma trick: the plainest wall on the street can conceal a patio fit for a count. We'll follow this street north, into the oldest quarter of the city.",
+        "anchorImage": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/237_Arc_i_carrer_de_la_Portella_(Palma)%2C_des_de_fora_la_muralla.jpg?width=900",
+          "caption": "The Portella arch and Carrer de la Portella seen from outside the wall",
+          "type": "photo"
+        },
+        "learnMore": {
+          "text": "The quarter inside the gate — between the cathedral, the walls and the old Temple area — is among the most ancient continuously inhabited ground in Palma, part of the upper town of Madina Mayurqa. After the 1229 conquest it filled with churches, convents and the townhouses of the island's nobility, and Carrer de la Portella became a showcase of the Mallorcan casal: a severe street front, a stone-arched entrance, and an inner courtyard (pati) with a broad staircase where visitors were received. Houses of this type were rebuilt again and again on the same plots, so a seventeenth-century patio may stand on Gothic, and Gothic on Islamic foundations. Ca la Gran Cristiana, at number 5, houses the Museum of Mallorca, whose collections run from talayotic prehistory through Islamic ceramics to Gothic painting — the whole layer-cake of the island under one roof. The gate itself shows the sea's old importance plainly: until the twentieth century, everything that entered this quarter from the water funnelled through openings like sa Portella, under the eyes of the wall's defenders.",
+          "images": [
+            {
+              "url": "https://commons.wikimedia.org/wiki/Special:FilePath/242_La_Portella%2C_a_la_muralla_de_Mar_(Palma)%2C_al_fons_arc_d'entrada_al_carrer_de_la_Portella.jpg?width=900",
+              "caption": "The sea wall at la Portella, with the entrance arch to the street beyond",
+              "type": "photo"
+            }
+          ]
+        },
+        "sources": [
+          { "label": "Lonely Planet — Sa Portella", "url": "https://www.lonelyplanet.com/points-of-interest/sa-portella/1476025" },
+          { "label": "SeeMallorca — History & Architecture Walk in Palma", "url": "https://www.seemallorca.com/history-and-architecture-walk-in" },
+          { "label": "Visit Palma — Dalt Murada (wall from Carrer de la Portella)", "url": "https://visitpalma.com/en/dir/dalt-murada/" }
+        ]
+      },
+      {
+        "id": "banys-arabs",
+        "order": 6,
+        "title": "Banys Àrabs: The Steam of Madina Mayurqa",
+        "lat": 39.56691,
+        "lng": 2.65115,
+        "triggerRadiusM": 25,
+        "spatialCue": "Through the doorway on your right at Can Serra 7, into a walled garden",
+        "transcript": "Through the doorway on your right, at number seven Carrer de Can Serra, a walled garden hides the most precious survivor in Palma: the Banys Àrabs, the Arab baths. Step inside and you are standing in Madina Mayurqa — this small hammam is one of the very few pieces of the Islamic city that still stands. In the bathing chamber, a brick dome punctured with skylights floats above a ring of twelve columns and horseshoe arches. Now look closely at the capitals: no two match. Some are Roman, some Byzantine — the Arab builders recycled columns from ruined buildings of earlier centuries, so this one room physically stacks three civilisations on top of each other. The baths likely belonged to the house of a wealthy notable, and they worked like baths across the Islamic world: a changing room, a warm room, a hot room thick with steam, and hours of conversation. The hot and warm rooms survive; the rest is garden now — lemon trees, palms and quiet. Sit for a moment. A thousand years ago, this was the sound of the city relaxing.",
+        "anchorImage": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Banys_%C3%80rabs_(Arabischen_B%C3%A4der)%2C_Palma_de_Mallorca_-_panoramio.jpg?width=900",
+          "caption": "The domed bath chamber of the Banys Àrabs on its ring of reused columns",
+          "type": "photo"
+        },
+        "learnMore": {
+          "text": "Historians date the baths to roughly the tenth to twelfth centuries, in the era when Mallorca's capital was Madina Mayurqa. The main chamber is nearly cubic, its half-orange dome built of brick and pierced by round skylights — described in the island's heritage literature as twenty-five light shafts — which once let shafts of sun cut through the steam. Traces of chimneys and hot-water and steam piping survive, evidence of the classic hypocaust-style heating beneath the hammam sequence of changing room, tepidarium and caldarium. The mismatched capitals — Muslim, Byzantine and Roman work reused side by side — are the detail scholars love, because they show a medieval building site treating the ruins of antiquity as a quarry. After the Christian conquest of 1229 the bathing culture faded; the structure survived as outbuildings within the garden of the manor house of Can Serra, and today stands in the garden of Can Pit. Entry costs a few euros, and the site is tiny — twenty minutes is plenty — but it is the only place in Palma where the Islamic city is not a foundation under something else, but the thing itself.",
+          "images": [
+            {
+              "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Ba%C3%B1os_%C3%81rabes._Hammams_de_Mayurqa.jpg?width=900",
+              "caption": "Horseshoe arches and dome of the hammam of Madina Mayurqa",
+              "type": "photo"
+            }
+          ]
+        },
+        "sources": [
+          { "label": "Wikipedia (es) — Baños árabes (Palma de Mallorca)", "url": "https://es.wikipedia.org/wiki/Ba%C3%B1os_%C3%A1rabes_(Palma_de_Mallorca)" },
+          { "label": "Visit Palma — Arab Baths: the Moorish footprint", "url": "https://visitpalma.com/en/dir/arab-baths-the-moorish-footprint/" },
+          { "label": "Illes Balears Tourism — The Arab baths of Palma", "url": "https://www.illesbalears.travel/en/mallorca/the-arab-baths-of-palma-de-mallorca" }
+        ]
+      },
+      {
+        "id": "call-major-monti-sion",
+        "order": 7,
+        "title": "Monti-Sion and the Vanished Call",
+        "lat": 39.56714,
+        "lng": 2.65264,
+        "triggerRadiusM": 30,
+        "spatialCue": "Look up at the baroque portal filling the narrow street ahead",
+        "transcript": "Look up at the huge baroque portal that fills this narrow street — the church of Monti-Sion. Now hear what the stones underneath it remember: this was the site of the Great Synagogue, and the lanes around you were the Call Major, the walled Jewish quarter of medieval Palma. Its people were required to live within these few blocks, threaded by two main streets — today's Carrer del Sol and this one, Monti-Sion. The community produced merchants, physicians and celebrated mapmakers, and for generations the Call was one of the most learned corners of the western Mediterranean. Then came 1391. That summer, anti-Jewish riots swept the Spanish kingdoms, and the mob fell on the Call — the quarter was sacked and hundreds of its people were killed. The community never recovered; survivors faced conversion, and the synagogue site eventually passed to the Jesuits, who raised the church you see. Walk the alleys here — Carrer del Vent, the old Call streets — and notice how the medieval street plan itself is the monument. The houses were rebuilt; the map of memory was not.",
+        "anchorImage": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mallorca_(22067300283).jpg?width=900",
+          "caption": "The sculpted baroque portal of the Monti-Sion church, on the site of the Great Synagogue",
+          "type": "photo"
+        },
+        "learnMore": {
+          "text": "The Call Major occupied the northeast of the walled medieval city — six large blocks where, from the late thirteenth century, Palma's Jews were obliged to live. Its two main axes were the present Carrer del Sol and the line of Carrer de Monti-Sion and Carrer del Seminari Vell. Mallorca's Jewish community was famous for its cartographers: the island's map-making school of the fourteenth century, associated with figures such as the Cresques family, produced some of the finest portolan charts of the age — a specific claim best explored in the Museum of Mallorca and the city's Jewish heritage centre nearby. After the 1391 pogrom and a further wave of forced conversions in 1435, open Jewish life on the island ended, but the converted families — later known as xuetes — remained identifiable by surname for centuries and faced persecution into the modern era; their story is one of Mallorca's most painful and most studied. At the church wall along Carrer del Vent, guides point out masonry believed to survive from the synagogue, where visitors sometimes tuck slips of paper with wishes between the stones, as at a small, improvised Western Wall.",
+          "images": [
+            {
+              "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Palma._Esgl%C3%A9sia_de_Monti-sion._Interior_(2).jpg?width=900",
+              "caption": "Interior of Monti-Sion church, built over the synagogue site",
+              "type": "photo"
+            }
+          ]
+        },
+        "sources": [
+          { "label": "Visit Palma — A route around Palma's Jewish quarter", "url": "https://www.visitpalma.com/en/discover/what-to-see-and-what-to-do/routes/pln651/a-route-around-palma-s-jewish-quarter" },
+          { "label": "Illes Balears Tourism — Palma's Jewish quarter and its secrets", "url": "https://www.illesbalears.travel/en/mallorca/delve-into-palmas-jewish-quarter-and-find-out-its-secrets" },
+          { "label": "AllMallorca — Jewish Quarter of Palma (the Call and the Chuetas)", "url": "https://www.allmallorca.com/en/legacy/the-chuetas/jewish-quarter-of-palma/" }
+        ]
+      },
+      {
+        "id": "sant-francesc",
+        "order": 8,
+        "title": "Sant Francesc: The Tomb of the Illuminated Doctor",
+        "lat": 39.56869,
+        "lng": 2.65281,
+        "triggerRadiusM": 35,
+        "spatialCue": "Face the massive sandstone façade with its carved portal and rose window",
+        "transcript": "Face the massive sandstone façade in front of you — almost windowless, like a fortress, except for the carved portal and the rose window at its heart. This is the basilica of Sant Francesc, begun by the Franciscans in 1281, barely fifty years after the conquest. The baroque front you see was rebuilt in the seventeenth century after lightning struck the old one. Inside, in a side chapel, lies the man this walk has been circling all along: Ramon Llull. Born in Palma around 1232 into the first generation after the conquest, he was a courtier who turned mystic, wrote in Catalan, Latin and Arabic, and crossed the sea again and again to debate in North Africa — a bridge between the three worlds whose layers you've been walking on. His alabaster tomb, carved in 1487 by Francesc Sagrera, shows him lying above seven niches meant for the liberal arts, which were never filled. Before you leave, slip into the Gothic cloister — orange trees, a well, and lobed arcades — declared a national monument back in 1881. It's the quietest ending Palma can offer.",
+        "anchorImage": {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/D%C3%A9tail_fa%C3%A7ade_Saint-Fran%C3%A7ois_de_Palma.jpg?width=900",
+          "caption": "The carved portal of the basilica of Sant Francesc",
+          "type": "photo"
+        },
+        "learnMore": {
+          "text": "The Franciscan convent complex grew for centuries: the vault of the single great nave took about a hundred years to complete, side chapels were still being added between 1445 and 1670, and the trapezoidal cloister — with its slim columns and lobed arches — was built from the fourteenth to the sixteenth centuries. Pope Pius XII raised the church to a minor basilica on 14 May 1943. Ramon Llull (c. 1232–1316), the 'Doctor Illuminatus', remains Mallorca's most extraordinary export: author of hundreds of works of philosophy, theology and fiction, pioneer of writing in the Catalan vernacular, and inventor of a combinatorial 'Art' of reasoning that fascinated thinkers for centuries. Tradition holds he was stoned while preaching in North Africa and died soon after; his remains were brought home to the Franciscans. The medieval miniature reproduced here comes from the Breviculum codex, made around 1321 — within living memory of Llull — to illustrate his life and teaching. Outside the church stands a statue of another friar of this house, Junípero Serra, who left this cloister in the eighteenth century and went on to found the California missions, from San Diego to San Francisco.",
+          "images": [
+            {
+              "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Cloister_of_the_Esgl%C3%A9sia_de_Sant_Francesc.jpg?width=900",
+              "caption": "The Gothic cloister of Sant Francesc, a national monument since 1881",
+              "type": "photo"
+            },
+            {
+              "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Codex_St_Peter_Perg_92_11v.jpg?width=900",
+              "caption": "Period art: miniature of Ramon Llull from the Breviculum codex, made c. 1321",
+              "type": "period-art"
+            }
+          ]
+        },
+        "sources": [
+          { "label": "Wikipedia (es) — Convento de San Francisco (Palma de Mallorca)", "url": "https://es.wikipedia.org/wiki/Convento_de_San_Francisco_(Palma_de_Mallorca)" },
+          { "label": "SpottingHistory — Basilica de Sant Francesc", "url": "https://www.spottinghistory.com/view/8397/basilica-de-sant-francesc/" },
+          { "label": "SeeMallorca — Basilica de Sant Francesc", "url": "https://www.seemallorca.com/sights/religious/basilica-de-sant-francesc-palma-de-mallorca" },
+          { "label": "GCatholic — Basílica de Sant Francesc, Palma", "url": "https://gcatholic.org/churches/spain/0607" }
+        ]
+      }
+    ]
+  }
+}
