@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Layers — Historical Walking Tours</title>
+<meta name="theme-color" content="#F7F3EC">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Layers">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root{
+    --bg:#F7F3EC; --card:#FFFFFF; --ink:#1B1611; --muted:#6E655A;
+    --accent:#C2572A; --accent-ink:#FFF6EF; --sea:#1F566B; --ok:#2E7D4F;
+    --line:#E8E0D2; --warn:#F5C400; --shadow:0 1px 2px rgba(27,22,17,.06),0 10px 28px rgba(27,22,17,.10);
+    --r:20px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;height:100%}
+  body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,system-ui,sans-serif;
+       font-size:16px;line-height:1.55;overscroll-behavior:none}
+  h1,h2,h3,.serif{font-family:Fraunces,Georgia,serif;font-weight:650;line-height:1.15;margin:0;letter-spacing:-.01em}
+  .screen{display:none;min-height:100dvh}
+  .screen.active{display:block}
+  .wrap{max-width:520px;margin:0 auto;padding:0 18px calc(28px + env(safe-area-inset-bottom))}
+
+  /* ---------- shared ---------- */
+  .brand{display:flex;align-items:center;gap:10px;padding:18px 0 4px}
+  .brand .logo{width:34px;height:34px;border-radius:10px;background:var(--accent);display:grid;place-items:center;flex:none}
+  .brand .logo svg{width:20px;height:20px}
+  .brand span{font-weight:700;font-size:15px;letter-spacing:.14em}
+  .brand small{color:var(--muted);font-weight:500;letter-spacing:0;margin-left:auto;font-size:12px}
+  .card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:18px;margin:14px 0}
+  .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:56px;border:0;
+       border-radius:16px;background:var(--accent);color:var(--accent-ink);font:600 17px Inter,sans-serif;
+       cursor:pointer;padding:14px 18px;text-align:center}
+  .btn:disabled{background:#CFC6B8;color:#8b8375;cursor:not-allowed}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:#F1EADD;border-radius:999px;
+        padding:4px 12px;font-size:13px;font-weight:600;color:var(--ink)}
+  .chip.live{background:#E3F0E7;color:var(--ok)}
+  .chip.soon{background:#F1EADD;color:var(--muted)}
+  .muted{color:var(--muted)}
+  .back{display:inline-flex;align-items:center;gap:6px;background:none;border:0;color:var(--ink);
+        font:600 15px Inter,sans-serif;padding:16px 0 4px;cursor:pointer}
+  .imglabel{position:absolute;left:10px;top:10px;background:rgba(27,22,17,.78);color:#fff;font-size:11px;
+        font-weight:600;letter-spacing:.06em;padding:3px 9px;border-radius:999px;text-transform:uppercase}
+
+  /* ---------- home ---------- */
+  #locbanner{display:flex;gap:12px;align-items:flex-start;padding:16px 2px 2px}
+  #locbanner .dot{width:10px;height:10px;border-radius:99px;background:var(--accent);margin-top:7px;flex:none;
+       animation:pulse 1.6s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(194,87,42,.35)}70%{box-shadow:0 0 0 12px rgba(194,87,42,0)}100%{box-shadow:0 0 0 0 rgba(194,87,42,0)}}
+  #loctitle{font-size:26px}
+  #locsub{margin-top:4px;font-size:15px}
+  .routecard{cursor:pointer}
+  .routecard h3{font-size:21px;margin-bottom:6px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .citylist{margin-top:6px}
+  .cityrow{display:flex;align-items:center;gap:12px;padding:13px 2px;border-bottom:1px solid var(--line)}
+  .cityrow:last-child{border-bottom:0}
+  .cityrow .flag{width:38px;height:38px;border-radius:12px;background:#EFE8DB;display:grid;place-items:center;font-size:17px;flex:none}
+  .cityrow b{display:block;font-size:15px}
+  .cityrow small{color:var(--muted)}
+  .cityrow .chip{margin-left:auto}
+  .cityrow.click{cursor:pointer}
+  .sectionlabel{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:22px 2px 2px}
+
+  /* ---------- route detail ---------- */
+  #map-preview{height:230px;border-radius:var(--r);box-shadow:var(--shadow);z-index:0}
+  .stats{display:flex;gap:10px;margin:14px 0}
+  .stat{flex:1;background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:12px 8px;text-align:center}
+  .stat b{display:block;font-size:19px;font-family:Fraunces,serif}
+  .stat small{color:var(--muted);font-size:12px}
+  .safety{border:2px solid var(--warn);background:#FFFBEA}
+  .safety .signrow{display:flex;justify-content:center;margin-bottom:12px}
+  .safety h3{font-size:20px;text-align:left}
+  .safety p{font-size:15px;margin:10px 0 16px}
+
+  /* ---------- walk ---------- */
+  #screen-walk{position:relative}
+  #map-walk{position:fixed;inset:0;z-index:0}
+  .walktop{position:fixed;top:calc(10px + env(safe-area-inset-top));left:0;right:0;z-index:500;
+       display:flex;gap:8px;padding:0 12px;align-items:center}
+  .walktop .chip{background:rgba(255,255,255,.94);box-shadow:var(--shadow)}
+  .walktop .spacer{flex:1}
+  .fabrow{position:fixed;right:12px;bottom:calc(96px + env(safe-area-inset-bottom));z-index:500;display:flex;flex-direction:column;gap:10px}
+  .fab{width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,.96);border:0;box-shadow:var(--shadow);
+       display:grid;place-items:center;cursor:pointer;font-size:20px}
+  .fab.on{background:var(--sea);color:#fff}
+  .walkbar{position:fixed;left:0;right:0;bottom:0;z-index:500;padding:10px 12px calc(12px + env(safe-area-inset-bottom));}
+  .walkbar .inner{max-width:520px;margin:0 auto;display:flex;gap:10px}
+  .walkbar .btn{box-shadow:var(--shadow)}
+  .stopmarker{background:var(--sea);color:#fff;border-radius:999px;width:30px;height:30px;display:grid;place-items:center;
+       font:700 13px Inter,sans-serif;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+  .stopmarker.done{background:var(--ok)}
+  .stopmarker.next{background:var(--accent)}
+  .memarker{width:18px;height:18px;border-radius:99px;background:#2B7FFF;border:3px solid #fff;box-shadow:0 0 0 6px rgba(43,127,255,.25)}
+
+  /* bottom sheet (stop card) */
+  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:900;transform:translateY(105%);transition:transform .38s cubic-bezier(.32,.72,.24,1);
+       background:var(--card);border-radius:26px 26px 0 0;box-shadow:0 -12px 40px rgba(27,22,17,.28);
+       max-height:82dvh;display:flex;flex-direction:column}
+  .sheet.open{transform:translateY(0)}
+  .sheet .grab{width:44px;height:5px;border-radius:99px;background:#DDD4C4;margin:10px auto 2px;flex:none}
+  .sheet .body{overflow-y:auto;padding:8px 18px calc(24px + env(safe-area-inset-bottom))}
+  .anchorwrap{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;background:#EFE8DB}
+  .anchorwrap img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover}
+  .anchorwrap .hint{position:absolute;right:10px;bottom:10px;background:rgba(27,22,17,.78);color:#fff;
+       font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px}
+  .caption{font-size:13px;color:var(--muted);margin:7px 2px 0}
+  .cue{display:flex;gap:8px;align-items:center;color:var(--accent);font-weight:600;font-size:14px;margin:14px 0 6px}
+  .sheet h2{font-size:22px}
+  .transcript{font-size:15.5px;margin-top:10px;white-space:pre-line}
+  .sheetbtns{display:flex;gap:10px;margin-top:16px}
+  .sheetbtns .btn{min-height:50px;font-size:15px}
+
+  /* modals */
+  .modal{position:fixed;inset:0;z-index:1200;background:rgba(20,16,12,.55);display:none;align-items:flex-end;justify-content:center}
+  .modal.open{display:flex}
+  .modal .panel{background:var(--card);width:100%;max-width:560px;max-height:92dvh;border-radius:26px 26px 0 0;
+       overflow-y:auto;padding:10px 18px calc(30px + env(safe-area-inset-bottom))}
+  .modal .grab{width:44px;height:5px;border-radius:99px;background:#DDD4C4;margin:8px auto 14px}
+  .modal h2{font-size:22px;margin-bottom:10px}
+  .modal figure{margin:16px 0;position:relative}
+  .modal figure img{width:100%;border-radius:14px;display:block;background:#EFE8DB}
+  details.sources{margin-top:20px;border-top:1px solid var(--line);padding-top:12px}
+  details.sources summary{font-size:13px;color:var(--muted);cursor:pointer;font-weight:600}
+  details.sources a{display:block;font-size:13px;color:var(--sea);margin:8px 0;word-break:break-all}
+  .logentry{border-bottom:1px solid var(--line);padding:14px 0}
+  .logentry h4{margin:0 0 6px;font-family:Fraunces,serif;font-size:17px}
+  .logentry p{margin:0;font-size:14px;color:#463f36}
+
+  /* ---------- end ---------- */
+  .endhero{text-align:center;padding:44px 0 8px}
+  .endhero .big{font-size:56px}
+  .endhero h1{font-size:30px;margin-top:8px}
+  .paywall h3{font-size:20px}
+  input[type=email]{width:100%;min-height:52px;border:1.5px solid var(--line);border-radius:14px;padding:0 16px;
+       font:500 16px Inter,sans-serif;background:#FDFBF7;margin:10px 0}
+  .toast{position:fixed;left:50%;transform:translateX(-50%) translateY(20px);bottom:calc(30px + env(safe-area-inset-bottom));
+       background:var(--ink);color:#fff;padding:12px 20px;border-radius:14px;font-size:14px;font-weight:600;
+       opacity:0;transition:all .3s;z-index:2000;pointer-events:none;max-width:88vw;text-align:center}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .leaflet-control-attribution{font-size:9px}
+</style>
+</head>
+<body>
+
+<!-- ==================== HOME ==================== -->
+<section class="screen active" id="screen-home">
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo"><svg viewBox="0 0 24 24" fill="none"><path d="M4 16.5 12 20l8-3.5M4 12l8 3.5L20 12M4 7.5 12 11l8-3.5L12 4 4 7.5Z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+      <span>LAYERS</span><small>working title · demo</small>
+    </div>
+
+    <div id="locbanner">
+      <div class="dot"></div>
+      <div>
+        <h1 id="loctitle">Finding you…</h1>
+        <p id="locsub" class="muted">Checking which city you're standing in.</p>
+      </div>
+    </div>
+
+    <div id="liveblock"></div>
+
+    <p class="sectionlabel">All cities</p>
+    <div class="card citylist" id="citylist"></div>
+    <p class="muted" style="font-size:13px;text-align:center;margin-top:18px">
+      Walks are AI-authored, human-reviewed, and never generated on the spot.<br>Every fact is sourced. Add to your home screen to keep it handy.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== ROUTE DETAIL ==================== -->
+<section class="screen" id="screen-route">
+  <div class="wrap">
+    <button class="back" onclick="showScreen('home')">← Palma de Mallorca</button>
+    <h1 style="font-size:26px;margin:8px 0 4px" id="rd-title"></h1>
+    <p class="muted" style="margin:0 0 14px" id="rd-desc"></p>
+    <div id="map-preview"></div>
+    <div class="stats">
+      <div class="stat"><b id="rd-stops"></b><small>stops</small></div>
+      <div class="stat"><b id="rd-dist"></b><small>distance</small></div>
+      <div class="stat"><b id="rd-dur"></b><small>at stroll pace</small></div>
+    </div>
+
+    <div class="card safety">
+      <div class="signrow">
+        <!-- Safety warning sign: scooter vs phone-walker (recreation of supplied warning image) -->
+        <svg width="168" height="150" viewBox="0 0 240 214" role="img" aria-label="Warning: speeding scooter approaching a pedestrian looking at a phone">
+          <path d="M120 6 L232 200 L8 200 Z" fill="#141414"/>
+          <path d="M120 20 L220 193 L20 193 Z" fill="#FFCC00"/>
+          <g fill="#141414">
+            <circle cx="63" cy="170" r="13" fill="none" stroke="#141414" stroke-width="7"/>
+            <circle cx="118" cy="170" r="13" fill="none" stroke="#141414" stroke-width="7"/>
+            <path d="M50 158c10-6 34-8 46-4l14 6 12 4-6 12-22-6c-12-3-34-2-42 2z"/>
+            <rect x="107" y="118" width="9" height="46" rx="4" transform="rotate(14 111 141)"/>
+            <path d="M100 112l26-4 4 9-26 5z"/>
+            <circle cx="97" cy="88" r="12"/>
+            <path d="M84 100c8-6 20-6 26 0l6 8-8 22-9 10-12-4 8-20-14-8z"/>
+            <path d="M40 150h14M34 160h16M30 170h14" stroke="#141414" stroke-width="5" stroke-linecap="round"/>
+            <path d="M150 128l8-16 3 12 12-8-6 14 13 0-11 9 9 8-15-2 2 13-9-11-7 10-1-13-11 4z"/>
+            <circle cx="188" cy="106" r="11"/>
+            <path d="M182 120c8-4 14-2 17 4l4 12-4 34-6 22h-9l5-24-8-14-4 16-10 20-9-3 10-24 4-22z"/>
+            <rect x="172" y="128" width="10" height="7" rx="2" transform="rotate(-30 177 131)"/>
+            <path d="M186 84l2-6M194 86l5-5M180 84l-3-6" stroke="#141414" stroke-width="4" stroke-linecap="round"/>
+            <text x="196" y="78" font-family="Inter,sans-serif" font-weight="800" font-size="30">!</text>
+          </g>
+        </svg>
+      </div>
+      <h3>Look up. Really.</h3>
+      <p>You are about to walk a city with your eyes drifting to a screen. Scooters, bikes and cars share these lanes and will not expect a walker looking down. Listen to the story on the move, but stop walking whenever you want to read or study a picture, and glance up before you step. Watch the traffic — it will not watch you.</p>
+      <button class="btn" id="btn-start">I'll stay aware — start the walk</button>
+    </div>
+    <p class="muted" style="font-size:13px;text-align:center">A few easy steps on the sea walls. Audio plays automatically as you reach each stop.</p>
+  </div>
+</section>
+
+<!-- ==================== WALK ==================== -->
+<section class="screen" id="screen-walk">
+  <div id="map-walk"></div>
+  <div class="walktop">
+    <button class="chip" onclick="confirmExit()" style="border:0;cursor:pointer">✕</button>
+    <span class="chip" id="progresschip">0 / 8 stops</span>
+    <span class="spacer"></span>
+    <span class="chip" id="gpschip">📡 GPS…</span>
+  </div>
+  <div class="fabrow">
+    <button class="fab" id="fab-sim" title="Simulate the walk (demo)" onclick="toggleSim()">🚶</button>
+    <button class="fab" title="Center on me" onclick="centerMe()">◎</button>
+  </div>
+  <div class="walkbar">
+    <div class="inner">
+      <button class="btn ghost" style="background:rgba(255,255,255,.96)" onclick="openTranscriptLog()">Transcript</button>
+      <button class="btn" id="btn-finish" style="display:none" onclick="finishWalk()">Finish walk</button>
+    </div>
+  </div>
+
+  <!-- stop card -->
+  <div class="sheet" id="stopsheet">
+    <div class="grab"></div>
+    <div class="body" id="stopsheet-body"></div>
+  </div>
+</section>
+
+<!-- ==================== END ==================== -->
+<section class="screen" id="screen-end">
+  <div class="wrap">
+    <div class="endhero">
+      <div class="big">🏛️</div>
+      <h1>You walked two thousand years.</h1>
+      <p class="muted" id="end-sub"></p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="end-stops"></b><small>stops completed</small></div>
+      <div class="stat"><b id="end-dist"></b><small>walked</small></div>
+      <div class="stat"><b id="end-eras">9</b><small>eras crossed</small></div>
+    </div>
+    <div class="card paywall" id="paywallcard">
+      <h3 class="serif">Keep peeling back Palma</h3>
+      <p class="muted" style="font-size:15px">Four more routes are being authored — the Call in depth, the maritime quarter, Bellver hill, and the Moorish water city.</p>
+      <button class="btn" id="btn-paywall">Unlock four more Palma routes — €4.99</button>
+    </div>
+    <div class="card" id="notifycard" style="display:none">
+      <h3 class="serif" style="font-size:20px">We're adding these soon — notify me?</h3>
+      <p class="muted" style="font-size:14px">No payment taken. Leave your email and you'll be first to know.</p>
+      <input type="email" id="notify-email" placeholder="you@example.com" inputmode="email" autocomplete="email">
+      <button class="btn" onclick="submitNotify()">Notify me</button>
+    </div>
+    <div class="card" id="thankscard" style="display:none;text-align:center">
+      <h3 class="serif" style="font-size:20px">You're on the list ✓</h3>
+      <p class="muted" style="font-size:14px">We'll write the moment new routes go live.</p>
+    </div>
+    <button class="btn ghost" onclick="resetWalk()">Walk it again</button>
+  </div>
+</section>
+
+<!-- learn-more modal -->
+<div class="modal" id="lm-modal" onclick="if(event.target===this)closeLearnMore()">
+  <div class="panel" id="lm-panel"></div>
+</div>
+<!-- transcript log modal -->
+<div class="modal" id="log-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="panel">
+    <div class="grab"></div>
+    <h2>Everything narrated so far</h2>
+    <div id="logbody"><p class="muted">Nothing yet — walk to your first stop.</p></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================================================================
+   LAYERS — Phase 1 demo build (Part B of the concept brief)
+   Static PWA. No API keys, no backend, nothing generated at runtime.
+   Narration = pre-authored transcripts spoken by on-device TTS
+   (stand-in for the recorded narrator voice of later stages).
+   ================================================================ */
+
+/* ---------- DATA (pre-authored, human-reviewable, frozen) ---------- */
+const CITIES=[
+ {id:"palma",name:"Palma de Mallorca",country:"Spain",status:"live",centreLat:39.5696,centreLng:2.6502,emoji:"🇪🇸"},
+ {id:"barcelona",name:"Barcelona",country:"Spain",status:"coming-soon",centreLat:41.3874,centreLng:2.1686,emoji:"🇪🇸"},
+ {id:"lisbon",name:"Lisbon",country:"Portugal",status:"coming-soon",centreLat:38.7223,centreLng:-9.1393,emoji:"🇵🇹"},
+ {id:"rome",name:"Rome",country:"Italy",status:"coming-soon",centreLat:41.8967,centreLng:12.4822,emoji:"🇮🇹"},
+ {id:"athens",name:"Athens",country:"Greece",status:"coming-soon",centreLat:37.9838,centreLng:23.7275,emoji:"🇬🇷"},
+ {id:"copenhagen",name:"Copenhagen",country:"Denmark",status:"coming-soon",centreLat:55.6761,centreLng:12.5683,emoji:"🇩🇰"},
+ {id:"tbilisi",name:"Tbilisi",country:"Georgia",status:"coming-soon",centreLat:41.7151,centreLng:44.8271,emoji:"🇬🇪"}
+];
+let ROUTE=null;  /* loaded from the city data file (B5) */
+
+/* ---------- state & persistence ---------- */
+const LS="layers_";
+let store={completed:[],started:false,ack:false,finished:false};
+try{store=Object.assign(store,JSON.parse(localStorage.getItem(LS+"progress")||"{}"))}catch(e){}
+function save(){localStorage.setItem(LS+"progress",JSON.stringify(store))}
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");
+  clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),2600)}
+
+/* ---------- helpers ---------- */
+const $=id=>document.getElementById(id);
+function haversine(a,b,c,d){const R=6371000,rad=x=>x*Math.PI/180;
+  const dLat=rad(c-a),dLng=rad(d-b);
+  const h=Math.sin(dLat/2)**2+Math.cos(rad(a))*Math.cos(rad(c))*Math.sin(dLng/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h))}
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function showScreen(name){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  $("screen-"+name).classList.add("active");
+  window.scrollTo(0,0);
+  if(name==="route")setTimeout(initPreview,60);
+  if(name==="walk")setTimeout(initWalk,60);
+}
+
+/* ---------- TTS (plays pre-authored transcript; nothing generated) ---------- */
+let speaking=false,utterQueue=[],voiceReady=null;
+function pickVoice(){const vs=speechSynthesis.getVoices();
+  return vs.find(v=>/en[-_]GB/i.test(v.lang)&&/female|serena|kate|sonia|libby/i.test(v.name))
+      ||vs.find(v=>/en[-_]GB/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||vs[0]}
+if("speechSynthesis" in window){speechSynthesis.onvoiceschanged=()=>{voiceReady=pickVoice()}}
+function speak(text,onend){
+  stopSpeech();
+  if(!("speechSynthesis" in window)){onend&&onend();return}
+  const parts=text.match(/[^.!?]+[.!?]+["']?|\S[^.!?]*$/g)||[text];
+  speaking=true;let i=0;
+  const next=()=>{
+    if(i>=parts.length){speaking=false;onend&&onend();return}
+    const u=new SpeechSynthesisUtterance(parts[i++].trim());
+    u.voice=voiceReady||pickVoice();u.rate=.97;u.pitch=1;
+    u.onend=next;u.onerror=next;
+    utterQueue.push(u);speechSynthesis.speak(u);
+  };
+  next();
+}
+function stopSpeech(){speaking=false;utterQueue=[];try{speechSynthesis.cancel()}catch(e){}}
+
+/* ---------- HOME: city detection ---------- */
+function nearestCity(lat,lng){let best=null,bd=1e12;
+  CITIES.forEach(c=>{const d=haversine(lat,lng,c.centreLat,c.centreLng);if(d<bd){bd=d;best=c}});
+  return{city:best,distM:bd}}
+function renderHome(detected){
+  const lb=$("liveblock");
+  const routeCard=`
+    <p class="sectionlabel">Walk now in Palma</p>
+    <div class="card routecard" onclick="openRoute()">
+      <span class="chip live">● Live</span>
+      <h3 style="margin-top:10px">${esc(ROUTE.title)}</h3>
+      <p class="muted" style="margin:0;font-size:14.5px">${esc(ROUTE.description)}</p>
+      <div class="meta">
+        <span class="chip">⏱ ${ROUTE.durationMin} min</span>
+        <span class="chip">${ROUTE.stops.length} stops</span>
+        <span class="chip">${ROUTE.distanceKm.toFixed(1)} km</span>
+        ${ROUTE.steep?'<span class="chip">⛰ Steep route</span>':""}
+      </div>
+    </div>
+    <div class="card" style="opacity:.65">
+      <span class="chip soon">Coming soon</span>
+      <h3 style="margin-top:10px;font-size:18px">Four more Palma routes</h3>
+      <p class="muted" style="margin:0;font-size:14px">The Call in depth · the maritime quarter · Bellver hill · the Moorish water city.</p>
+    </div>`;
+  if(!detected){ $("loctitle").textContent="Where will you walk?";
+    $("locsub").textContent="Location is off — no problem. Browse the cities below; Palma is live today.";
+    lb.innerHTML=routeCard;return}
+  const{city,distM}=detected;
+  if(distM<30000){
+    if(city.status==="live"){
+      $("loctitle").textContent=`You're in ${city.name}.`;
+      $("locsub").textContent="Good news — this city is live. Pick a walk and go.";
+    }else{
+      $("loctitle").textContent=`You're in ${city.name}.`;
+      $("locsub").textContent=`${city.name} is coming soon. The nearest live city is Palma de Mallorca — and you can preview any walk from right here.`;
+    }
+  }else{
+    $("loctitle").textContent="You're off our map — for now.";
+    $("locsub").textContent="No city near you yet. New cities are being authored; Palma de Mallorca is live and you can preview it from anywhere.";
+  }
+  lb.innerHTML=routeCard;
+}
+function renderCityList(){
+  $("citylist").innerHTML=CITIES.map(c=>`
+    <div class="cityrow ${c.status==='live'?'click':''}" ${c.status==='live'?'onclick="openRoute()"':''}>
+      <div class="flag">${c.emoji}</div>
+      <div><b>${esc(c.name)}</b><small>${esc(c.country)}</small></div>
+      <span class="chip ${c.status==='live'?'live':'soon'}">${c.status==="live"?"● Live":"Coming soon"}</span>
+    </div>`).join("")}
+function detectCity(){
+  if(!navigator.geolocation){renderHome(null);return}
+  navigator.geolocation.getCurrentPosition(
+    p=>renderHome(nearestCity(p.coords.latitude,p.coords.longitude)),
+    ()=>renderHome(null),{timeout:8000,maximumAge:60000});
+}
+
+/* ---------- ROUTE DETAIL ---------- */
+let previewMap=null;
+function openRoute(){
+  $("rd-title").textContent=ROUTE.title;
+  $("rd-desc").textContent=ROUTE.description;
+  $("rd-stops").textContent=ROUTE.stops.length;
+  $("rd-dist").textContent=ROUTE.distanceKm.toFixed(1)+" km";
+  $("rd-dur").textContent=ROUTE.durationMin+" min";
+  showScreen("route");
+}
+function routeLatLngs(){return ROUTE.stops.map(s=>[s.lat,s.lng])}
+function baseTiles(){return L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+  {attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19})}
+function initPreview(){
+  if(previewMap){previewMap.invalidateSize();return}
+  previewMap=L.map("map-preview",{zoomControl:false,dragging:false,scrollWheelZoom:false,touchZoom:false,doubleClickZoom:false,attributionControl:true});
+  baseTiles().addTo(previewMap);
+  const line=L.polyline(routeLatLngs(),{color:"#C2572A",weight:4,dashArray:"1 7",lineCap:"round"}).addTo(previewMap);
+  ROUTE.stops.forEach(s=>L.marker([s.lat,s.lng],{icon:L.divIcon({className:"",html:`<div class="stopmarker">${s.order}</div>`,iconSize:[30,30],iconAnchor:[15,15]})}).addTo(previewMap));
+  previewMap.fitBounds(line.getBounds(),{padding:[26,26]});
+}
+
+/* ---------- WALK ---------- */
+let walkMap=null,meMarker=null,stopMarkers={},watchId=null,activeStopId=null;
+let sim={on:false,timer:null,pos:null,target:0};
+function initWalk(){
+  if(!walkMap){
+    walkMap=L.map("map-walk",{zoomControl:false});
+    baseTiles().addTo(walkMap);
+    L.polyline(routeLatLngs(),{color:"#C2572A",weight:4,dashArray:"1 7",lineCap:"round"}).addTo(walkMap);
+    ROUTE.stops.forEach(s=>{
+      stopMarkers[s.id]=L.marker([s.lat,s.lng],{icon:stopIcon(s)}).addTo(walkMap)
+        .on("click",()=>fireStop(s,{manual:true}));
+    });
+    walkMap.fitBounds(L.latLngBounds(routeLatLngs()),{padding:[46,46]});
+    startGPS();
+  }else{walkMap.invalidateSize()}
+  refreshMarkers();updateProgress();renderLog();
+  if(store.completed.length)toast("Welcome back — your progress was saved.");
+}
+function stopIcon(s){
+  const done=store.completed.includes(s.id);
+  const next=!done&&nextStop()&&nextStop().id===s.id;
+  return L.divIcon({className:"",html:`<div class="stopmarker ${done?"done":next?"next":""}">${done?"✓":s.order}</div>`,iconSize:[30,30],iconAnchor:[15,15]})}
+function refreshMarkers(){ROUTE.stops.forEach(s=>stopMarkers[s.id]&&stopMarkers[s.id].setIcon(stopIcon(s)))}
+function nextStop(){return ROUTE.stops.find(s=>!store.completed.includes(s.id))}
+function updateProgress(){
+  $("progresschip").textContent=`${store.completed.length} / ${ROUTE.stops.length} stops`;
+  $("btn-finish").style.display=store.completed.length===ROUTE.stops.length?"flex":"none";
+}
+function startGPS(){
+  if(!navigator.geolocation){$("gpschip").textContent="📡 No GPS — tap stops or simulate";return}
+  watchId=navigator.geolocation.watchPosition(p=>{
+    $("gpschip").textContent="📡 GPS ok";
+    if(!sim.on)setMe(p.coords.latitude,p.coords.longitude,true);
+  },err=>{
+    $("gpschip").textContent="📡 GPS weak — walk continues";
+  },{enableHighAccuracy:true,maximumAge:3000,timeout:15000});
+}
+function setMe(lat,lng,checkTriggers){
+  if(!meMarker){meMarker=L.marker([lat,lng],{icon:L.divIcon({className:"",html:'<div class="memarker"></div>',iconSize:[18,18],iconAnchor:[9,9]}),zIndexOffset:1000}).addTo(walkMap)}
+  meMarker.setLatLng([lat,lng]);
+  if(checkTriggers)ROUTE.stops.forEach(s=>{
+    if(store.completed.includes(s.id))return;
+    if(haversine(lat,lng,s.lat,s.lng)<=s.triggerRadiusM)fireStop(s,{});
+  });
+}
+function centerMe(){if(meMarker)walkMap.setView(meMarker.getLatLng(),17,{animate:true});
+  else toast("No position yet — enable location or tap 🚶 to simulate.")}
+
+/* demo simulation: a virtual walker strolls the route and triggers stops naturally */
+function toggleSim(){
+  sim.on=!sim.on;$("fab-sim").classList.toggle("on",sim.on);
+  if(sim.on){toast("Demo walker started — it strolls the route and pauses to listen.");
+    if(!sim.pos){const s0=ROUTE.stops[0];sim.pos=[s0.lat+0.0006,s0.lng-0.0008];sim.target=0}
+    walkMap.setView(sim.pos,17);simTick();
+  }else{clearTimeout(sim.timer)}
+}
+function simTick(){
+  if(!sim.on)return;
+  if(speaking){sim.timer=setTimeout(simTick,400);return}  /* pause & listen */
+  const t=ROUTE.stops[sim.target];
+  if(!t){sim.on=false;$("fab-sim").classList.remove("on");return}
+  if(store.completed.includes(t.id)){sim.target++;sim.timer=setTimeout(simTick,300);return}
+  const[la,ln]=sim.pos,d=haversine(la,ln,t.lat,t.lng);
+  const stepM=7,f=Math.min(1,stepM/Math.max(d,1));
+  sim.pos=[la+(t.lat-la)*f,ln+(t.lng-ln)*f];
+  setMe(sim.pos[0],sim.pos[1],true);
+  walkMap.panTo(sim.pos,{animate:true,duration:.25});
+  sim.timer=setTimeout(simTick,220);
+}
+
+/* firing a stop = the whole four-layer experience */
+function fireStop(s,{manual=false}={}){
+  activeStopId=s.id;
+  const first=!store.completed.includes(s.id);
+  if(first){store.completed.push(s.id);save();refreshMarkers();updateProgress();renderLog()}
+  renderStopSheet(s);
+  $("stopsheet").classList.add("open");
+  speak(s.transcript,()=>{ if(store.completed.length===ROUTE.stops.length)toast("That was the last stop — finish the walk when ready.")});
+}
+function renderStopSheet(s){
+  $("stopsheet-body").innerHTML=`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <span class="chip">Stop ${s.order} of ${ROUTE.stops.length}</span>
+      <button class="chip" style="border:0;cursor:pointer;margin-left:auto" onclick="closeSheet()">Close ✕</button>
+    </div>
+    <div class="anchorwrap" onclick="openLearnMore('${s.id}')">
+      <img src="${s.anchorImage.url}" alt="${esc(s.anchorImage.caption)}" loading="lazy"
+           onerror="this.closest('.anchorwrap').style.aspectRatio='16/10';this.style.display='none'">
+      ${s.anchorImage.type!=="photo"?`<span class="imglabel">${s.anchorImage.type==="reconstruction"?"Artist's impression":"Period art"}</span>`:""}
+      <span class="hint">Tap to learn more ↗</span>
+    </div>
+    <p class="caption">${esc(s.anchorImage.caption)}</p>
+    <div class="cue">📍 ${esc(s.spatialCue)}</div>
+    <h2>${esc(s.title)}</h2>
+    <p class="transcript">${esc(s.transcript)}</p>
+    <div class="sheetbtns">
+      <button class="btn ghost" onclick="replayStop('${s.id}')">↻ Replay audio</button>
+      <button class="btn" onclick="openLearnMore('${s.id}')">Learn more</button>
+    </div>`;
+}
+function closeSheet(){$("stopsheet").classList.remove("open");stopSpeech()}
+function replayStop(id){const s=ROUTE.stops.find(x=>x.id===id);speak(s.transcript)}
+
+/* learn-more layer + hidden sources layer */
+function openLearnMore(id){
+  const s=ROUTE.stops.find(x=>x.id===id);
+  $("lm-panel").innerHTML=`
+    <div class="grab"></div>
+    <h2>${esc(s.title)}</h2>
+    <p style="font-size:15px;white-space:pre-line">${esc(s.learnMore.text)}</p>
+    ${s.learnMore.images.map(im=>`
+      <figure>
+        <img src="${im.url}" alt="${esc(im.caption)}" loading="lazy" onerror="this.parentElement.style.display='none'">
+        ${im.type!=="photo"?`<span class="imglabel">${im.type==="reconstruction"?"Artist's impression":"Period art"}</span>`:""}
+        <p class="caption">${esc(im.caption)}</p>
+      </figure>`).join("")}
+    <details class="sources">
+      <summary>Sources for this stop</summary>
+      ${s.sources.map(src=>`<a href="${src.url}" target="_blank" rel="noopener">${esc(src.label)}</a>`).join("")}
+    </details>
+    <button class="btn ghost" style="margin-top:18px" onclick="closeLearnMore()">Back to the walk</button>`;
+  $("lm-modal").classList.add("open");
+}
+function closeLearnMore(){$("lm-modal").classList.remove("open")}
+
+/* running transcript */
+function renderLog(){
+  const done=ROUTE.stops.filter(s=>store.completed.includes(s.id));
+  $("logbody").innerHTML=done.length?done.map(s=>`
+    <div class="logentry"><h4>${s.order}. ${esc(s.title)}</h4><p>${esc(s.transcript)}</p></div>`).join("")
+    :'<p class="muted">Nothing yet — walk to your first stop.</p>';
+}
+function openTranscriptLog(){renderLog();$("log-modal").classList.add("open")}
+function confirmExit(){stopSpeech();closeSheet();showScreen("home")}
+
+/* ---------- END + soft paywall (no payment processed) ---------- */
+function walkedKm(){let m=0;const pts=routeLatLngs();
+  for(let i=1;i<pts.length;i++)m+=haversine(pts[i-1][0],pts[i-1][1],pts[i][0],pts[i][1]);
+  return m*1.3/1000}
+function finishWalk(){
+  stopSpeech();closeSheet();store.finished=true;save();
+  $("end-stops").textContent=store.completed.length+" / "+ROUTE.stops.length;
+  $("end-dist").textContent=walkedKm().toFixed(1)+" km";
+  $("end-sub").textContent="Roman grid, Moorish baths, a vanished Call, a royal garden — all in one hour on foot.";
+  showScreen("end");
+}
+function submitNotify(){
+  const em=$("notify-email").value.trim();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){toast("That email doesn't look right.");return}
+  const arr=JSON.parse(localStorage.getItem(LS+"emails")||"[]");arr.push({email:em,at:Date.now()});
+  localStorage.setItem(LS+"emails",JSON.stringify(arr));
+  $("notifycard").style.display="none";$("thankscard").style.display="block";
+}
+function resetWalk(){
+  store={completed:[],started:false,ack:store.ack,finished:false};save();
+  location.reload();
+}
+
+/* ---------- boot: load the city data file, restore mid-walk progress ---------- */
+function boot(){
+  renderCityList();
+  $("btn-start").addEventListener("click",()=>{
+    store.ack=true;store.started=true;save();
+    if("speechSynthesis" in window){try{const u=new SpeechSynthesisUtterance(" ");speechSynthesis.speak(u)}catch(e){}}
+    showScreen("walk");
+  });
+  $("btn-paywall").addEventListener("click",()=>{
+    const taps=(+localStorage.getItem(LS+"paywallTaps")||0)+1;
+    localStorage.setItem(LS+"paywallTaps",taps);
+    $("paywallcard").style.display="none";$("notifycard").style.display="block";
+  });
+  if(store.started&&!store.finished&&store.completed.length>0){
+    showScreen("walk");           /* progress persists across reloads (B6) */
+  }else{
+    renderHome(null);             /* render immediately… */
+    detectCity();                 /* …then refine once location arrives */
+  }
+}
+fetch("palma-route.json").then(r=>r.json()).then(j=>{ROUTE=j.route;boot()})
+  .catch(()=>{document.body.innerHTML='<p style="padding:40px;font-family:Inter,sans-serif">Could not load route data. Please reload.</p>'});
+</script>
+</body>
+</html>
